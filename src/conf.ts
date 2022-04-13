@@ -1,4 +1,4 @@
-import Conf from "conf";
+import Conf from 'conf';
 
 const conf = new Conf();
 export default conf;

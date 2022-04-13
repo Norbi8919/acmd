@@ -8,14 +8,21 @@ export const configure = (conf: ModuleConf) => {
   if (!nebulaPath) {
     nebulaPath = getInput('Please enter the path to your nebula binary', true)!;
   } else {
-    nebulaPath = getInput('Please enter the path to your nebula binary', false, nebulaPath)!;
+    nebulaPath = getInput(
+      'Please enter the path to your nebula binary',
+      false,
+      nebulaPath
+    )!;
   }
 
-  const configPath = getInput('Please enter the path to your nebula config file', true)!;
+  const configPath = getInput(
+    'Please enter the path to your nebula config file',
+    true
+  )!;
 
   conf.set('nebulaPath', nebulaPath);
   conf.set('configPath', configPath);
-  
+
   console.log(chalk.green('Nebula configured'));
 };
 
@@ -24,8 +31,10 @@ export const start = (conf: ModuleConf) => {
     console.log(chalk.red('Please run `nebula configure` first.'));
     return;
   }
-  
-  const cmd = `sudo ${conf.get('nebulaPath')} --config ${conf.get('configPath')};`;
+
+  const cmd = `sudo ${conf.get('nebulaPath')} --config ${conf.get(
+    'configPath'
+  )};`;
   console.log(chalk.cyanBright('Starting nebula with command:'));
   console.log(cmd);
   console.log(chalk.cyanBright('\nOutput:'));
