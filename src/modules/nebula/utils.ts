@@ -6,17 +6,17 @@ import chalk from 'chalk';
 export const configure = (conf: ModuleConf) => {
   let nebulaPath = execute('which nebula');
   if (!nebulaPath) {
-    nebulaPath = getInput('Please enter the path to your nebula binary', true)!;
+    nebulaPath = getInput('Please enter the path to your Nebula binary', true)!;
   } else {
     nebulaPath = getInput(
-      'Please enter the path to your nebula binary',
+      'Please enter the path to your Nebula binary',
       false,
       nebulaPath
     )!;
   }
 
   const configPath = getInput(
-    'Please enter the path to your nebula config file',
+    'Please enter the path to your Nebula config file',
     true
   )!;
 
@@ -35,14 +35,12 @@ export const start = (conf: ModuleConf) => {
   const cmd = `sudo ${conf.get('nebulaPath')} --config ${conf.get(
     'configPath'
   )};`;
-  console.log(chalk.cyanBright('Starting nebula with command:'));
-  console.log(cmd);
-  console.log(chalk.cyanBright('\nOutput:'));
-  execute(cmd, true, true);
+  console.log(chalk.bold('Starting Nebula...'));
+  execute(cmd, { showOutput: true, printCommand: true });
 };
 
 export const printConfig = (conf: ModuleConf) => {
-  console.log(chalk.cyanBright('Nebula config:'));
+  console.log(chalk.bold('Nebula config:'));
   console.log(`  - Binary path: ${conf.get('nebulaPath')}`);
   console.log(`  - Config path: ${conf.get('configPath')}`);
 };

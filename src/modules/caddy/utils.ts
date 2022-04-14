@@ -6,10 +6,10 @@ import chalk from 'chalk';
 export const configure = (conf: ModuleConf) => {
   let caddyPath = execute('which caddy');
   if (!caddyPath) {
-    caddyPath = getInput('Please enter the path to your caddy binary', true)!;
+    caddyPath = getInput('Please enter the path to your Caddy binary', true)!;
   } else {
     caddyPath = getInput(
-      'Please enter the path to your caddy binary',
+      'Please enter the path to your Caddy binary',
       false,
       caddyPath
     )!;
@@ -29,7 +29,7 @@ export const configure = (conf: ModuleConf) => {
   conf.set('caddyPath', caddyPath);
   conf.set('caddyfilePath', caddyfilePath);
 
-  console.log(chalk.green('caddy configured'));
+  console.log(chalk.green('Caddy configured'));
 };
 
 export const start = (conf: ModuleConf) => {
@@ -41,10 +41,9 @@ export const start = (conf: ModuleConf) => {
   const cmd = `sudo ${conf.get(
     'caddyPath'
   )} start --adapter caddyfile --config ${conf.get('caddyfilePath')}`;
-  console.log(chalk.cyanBright('Starting caddy with command:'));
-  console.log(cmd);
-  console.log(chalk.cyanBright('\nOutput:'));
-  execute(cmd, true, true);
+  console.log(chalk.bold('Starting Caddy...'));
+  execute(cmd, { showOutput: true, printCommand: true });
+  
 };
 
 export const stop = (conf: ModuleConf) => {
@@ -54,14 +53,12 @@ export const stop = (conf: ModuleConf) => {
   }
 
   const cmd = `sudo ${conf.get('caddyPath')} stop`;
-  console.log(chalk.cyanBright('Stopping caddy with command:'));
-  console.log(cmd);
-  console.log(chalk.cyanBright('\nOutput:'));
-  execute(cmd, true, true);
+  console.log(chalk.bold('Stopping Caddy...'));
+  execute(cmd, { showOutput: true, printCommand: true });
 };
 
 export const printConfig = (conf: ModuleConf) => {
-  console.log(chalk.cyanBright('caddy config:'));
+  console.log(chalk.bold('Caddy config:'));
   console.log(`  - Binary path: ${conf.get('caddyPath')}`);
   console.log(`  - Config path: ${conf.get('caddyfilePath')}`);
 };
