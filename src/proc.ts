@@ -6,7 +6,7 @@ interface ExecuteOptions {
   suppressError?: boolean;
   printCommand?: boolean;
 }
-const defaultOptions: ExecuteOptions = {
+const defaultExecOptions: ExecuteOptions = {
   showOutput: false,
   suppressError: true,
   printCommand: false,
@@ -14,9 +14,9 @@ const defaultOptions: ExecuteOptions = {
 
 export const execute = (
   command: string,
-  options: ExecuteOptions = defaultOptions
+  options: ExecuteOptions = defaultExecOptions
 ) => {
-  const opts = { ...defaultOptions, ...options };
+  const opts = { ...defaultExecOptions, ...options };
 
   if (opts.printCommand) {
     const msg = `${chalk.cyanBright('Executing command:')}\n${command}`;
@@ -39,4 +39,26 @@ export const execute = (
       throw e;
     }
   }
+};
+
+interface WatchOptions {
+  tail?: number | undefined;
+  delay?: number | undefined;
+}
+const defaultWatchOptions: WatchOptions = {
+  tail: undefined,
+  delay: 1,
+};
+export const watch = (
+  command: string,
+  execOptions: ExecuteOptions = defaultExecOptions,
+  watchOptions: WatchOptions = defaultWatchOptions
+) => {
+  const watchOpts = { ...defaultWatchOptions, ...watchOptions };
+  let cmd = `watch -n ${watchOpts.delay} "${command}";`;
+  if (watchOpts.tail) {
+    cmd = `watch -n ${watchOpts.delay} "${command} | tail -n ${watchOpts.tail}";`;
+  }
+
+  return execute(cmd, execOptions);
 };

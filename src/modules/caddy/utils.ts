@@ -43,7 +43,6 @@ export const start = (conf: ModuleConf) => {
   )} start --adapter caddyfile --config ${conf.get('caddyfilePath')}`;
   console.log(chalk.bold('Starting Caddy...'));
   execute(cmd, { showOutput: true, printCommand: true });
-  
 };
 
 export const stop = (conf: ModuleConf) => {

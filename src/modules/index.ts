@@ -4,10 +4,12 @@ import { Module } from '../types';
 
 import nebula from './nebula';
 import caddy from './caddy';
+import kube from './kube';
 
 const modules: { [key in string]: Module } = {
   nebula,
   caddy,
+  kube,
 };
 
 const constructModule = (
