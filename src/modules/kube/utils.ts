@@ -1,85 +1,44 @@
 import chalk from 'chalk';
 import { ModuleConf } from '../../conf';
-import { execute, watch } from '../../proc';
+import { execute, WatchOptions } from '../../proc';
 
-export const getAllNodes = (conf: ModuleConf) => {
-  const cmd = 'kubectl get nodes --all-namespaces;';
+export const getAllNodes = (conf: ModuleConf, watchOpts?: WatchOptions) => {
+  const cmd = 'kubectl get nodes --all-namespaces';
   console.log(chalk.bold('Getting all nodes...'));
-  execute(cmd, { showOutput: true, printCommand: true });
+  execute(cmd, { showOutput: true, printCommand: true }, watchOpts);
 };
 
-export const watchAllNodes = (conf: ModuleConf, delay: number) => {
-  const cmd = 'kubectl get nodes --all-namespaces;';
-  console.log(chalk.bold('Watching all nodes...'));
-  watch(cmd, { showOutput: true, printCommand: true }, { delay });
-};
-
-export const getAllPods = (conf: ModuleConf) => {
+export const getAllPods = (conf: ModuleConf, watchOpts?: WatchOptions) => {
   const cmd = `kubectl get pods -A \
---field-selector=metadata.namespace!=kube-system;`;
+--field-selector=metadata.namespace!=kube-system`;
   console.log(chalk.bold('Getting all nodes...'));
-  execute(cmd, { showOutput: true, printCommand: true });
-};
-
-export const watchAllPods = (conf: ModuleConf, delay: number) => {
-  const cmd = `kubectl get pods -A \
---field-selector=metadata.namespace!=kube-system;`;
-  console.log(chalk.bold('Watching all nodes...'));
-  watch(cmd, { showOutput: true, printCommand: true }, { delay });
+  execute(cmd, { showOutput: true, printCommand: true }, watchOpts);
 };
 
 export const describePod = (
   conf: ModuleConf,
   namespace: string | undefined,
-  podId: string
+  podId: string,
+  watchOpts?: WatchOptions
 ) => {
   let cmd = `kubectl describe pod ${podId}`;
   if (namespace) {
     cmd = `${cmd} --namespace ${namespace}`;
   }
   console.log(chalk.bold('Describing pod...'));
-  execute(cmd, { showOutput: true, printCommand: true });
-};
-
-export const watchDescribePod = (
-  conf: ModuleConf,
-  namespace: string | undefined,
-  podId: string,
-  tail: number,
-  delay: number
-) => {
-  let cmd = `kubectl describe pod ${podId}`;
-  if (namespace) {
-    cmd = `${cmd} --namespace ${namespace}`;
-  }
-
-  watch(cmd, { showOutput: true, printCommand: true }, { tail, delay });
+  execute(cmd, { showOutput: true, printCommand: true }, watchOpts);
 };
 
 export const getPodLogs = (
   conf: ModuleConf,
   namespace: string | undefined,
-  podId: string
+  podId: string,
+  watchOpts?: WatchOptions
 ) => {
   let cmd = `kubectl logs ${podId}`;
   if (namespace) {
     cmd = `${cmd} --namespace ${namespace}`;
   }
   console.log(chalk.bold('Getting pod logs...'));
-  execute(cmd, { showOutput: true, printCommand: true });
-};
-
-export const watchPodLogs = (
-  conf: ModuleConf,
-  namespace: string | undefined,
-  podId: string,
-  tail: number,
-  delay: number
-) => {
-  let cmd = `kubectl logs ${podId}`;
-  if (namespace) {
-    cmd = `${cmd} --namespace ${namespace}`;
-  }
-
-  watch(cmd, { showOutput: true, printCommand: true }, { tail, delay });
+  execute(cmd, { showOutput: true, printCommand: true }, watchOpts);
 };
