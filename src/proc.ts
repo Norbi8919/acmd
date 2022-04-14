@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 import { execSync } from 'child_process';
+import { combineObjects } from './utils';
 
 interface ExecuteOptions {
   showOutput?: boolean;
@@ -16,7 +17,7 @@ export const execute = (
   command: string,
   options: ExecuteOptions = defaultExecOptions
 ) => {
-  const opts = { ...defaultExecOptions, ...options };
+  const opts = combineObjects(defaultExecOptions, options);
 
   if (opts.printCommand) {
     const msg = `${chalk.cyanBright('Executing command:')}\n${command}`;
@@ -54,7 +55,7 @@ export const watch = (
   execOptions: ExecuteOptions = defaultExecOptions,
   watchOptions: WatchOptions = defaultWatchOptions
 ) => {
-  const watchOpts = { ...defaultWatchOptions, ...watchOptions };
+  const watchOpts = combineObjects(defaultWatchOptions, watchOptions);
   let cmd = `watch -n ${watchOpts.delay} "${command}";`;
   if (watchOpts.tail) {
     cmd = `watch -n ${watchOpts.delay} "${command} | tail -n ${watchOpts.tail}";`;
