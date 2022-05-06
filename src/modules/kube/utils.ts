@@ -47,7 +47,7 @@ export const getLatestPod = (
   conf: ModuleConf,
   namespace: string | undefined,
 ) => {
-  let cmd = `kubectl get pod --sort-by=.status.startTime -o name`;
+  let cmd = `kubectl get pod --sort-by=.metadata.creationTimestamp -o name`;
   if (namespace) {
     cmd = `${cmd} --namespace ${namespace}`;
   }
