@@ -42,3 +42,17 @@ export const getPodLogs = (
   console.log(chalk.bold('Getting pod logs...'));
   execute(cmd, { showOutput: true, printCommand: true }, watchOpts);
 };
+
+export const getLatestPod = (
+  conf: ModuleConf,
+  namespace: string | undefined,
+) => {
+  let cmd = `kubectl get pod --sort-by=.status.startTime -o name`;
+  if (namespace) {
+    cmd = `${cmd} --namespace ${namespace}`;
+  }
+  // Trim the prefix of "pod/"
+  cmd = `${cmd} | cut -c 5-`;
+  console.log(chalk.bold('Getting latest pod...'));
+  execute(cmd, { showOutput: true, printCommand: true });
+};
