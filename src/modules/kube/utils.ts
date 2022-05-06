@@ -51,8 +51,8 @@ export const getLatestPod = (
   if (namespace) {
     cmd = `${cmd} --namespace ${namespace}`;
   }
-  // Trim the prefix of "pod/"
-  cmd = `${cmd} | cut -c 5-`;
+  // Keep only the last pod and trim the prefix of "pod/"
+  cmd = `${cmd} | tail -n 1 | cut -c 5-`;
   console.log(chalk.bold('Getting latest pod...'));
   execute(cmd, { showOutput: true, printCommand: true });
 };
