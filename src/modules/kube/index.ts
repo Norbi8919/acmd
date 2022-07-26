@@ -1,7 +1,13 @@
 import { Command, Option } from 'commander';
 import { ModuleConf } from '../../conf';
-import { watchableCommand } from '../../utils';
-import { getAllPods, getAllNodes, describePod, getPodLogs, getLatestPod } from './utils';
+import { quietableCommand, watchableCommand } from '../../utils';
+import {
+  getAllPods,
+  getAllNodes,
+  describePod,
+  getPodLogs,
+  getLatestPod,
+} from './utils';
 
 export default (command: Command, conf: ModuleConf) => {
   watchableCommand(
@@ -55,14 +61,12 @@ export default (command: Command, conf: ModuleConf) => {
       options.watch && { delay: options.delay, tail: options.tail }
     )
   );
-  command
-    .command('latest-pod')
-    .description('Get the latest pod name')
-    .option('-n, --namespace [namespace]', 'the namespace of the pod')
-    .action((options: any) =>
-      getLatestPod(
-        conf,
-        options.namespace,
-      )
-    );
+  quietableCommand(
+    command
+      .command('latest-pod')
+      .description('Get the latest pod name')
+      .option('-n, --namespace [namespace]', 'the namespace of the pod')
+  ).action((options: any) =>
+    getLatestPod(conf, options.namespace, options.quiet)
+  );
 };

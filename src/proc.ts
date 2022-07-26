@@ -6,6 +6,7 @@ export interface ExecuteOptions {
   showOutput?: boolean;
   suppressError?: boolean;
   printCommand?: boolean;
+  quiet?: boolean;
 }
 const defaultExecOptions: ExecuteOptions = {
   showOutput: false,
@@ -38,9 +39,8 @@ export const execute = (
     const watchOpts = combineObjects(defaultWatchOptions, watchOptions);
     cmd = watchCmd(command, watchOpts);
   }
-
   try {
-    if (execOpts.showOutput && !watchOptions) {
+    if (execOpts.showOutput && !watchOptions && !execOpts.quiet) {
       console.log(chalk.cyanBright('\nOutput:'));
     }
     const output = execSync(cmd, {

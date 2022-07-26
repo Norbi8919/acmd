@@ -25,3 +25,7 @@ export const watchableCommand = (command: Command) => {
     .option('-d, --delay [seconds]', 'the delay between watching')
     .option('-t, --tail [lines]', 'number of lines to tail');
 };
+
+export const quietableCommand = (command: Command) => {
+  return command.option('-q, --quiet', 'if provided, only print output');
+};

@@ -46,13 +46,16 @@ export const getPodLogs = (
 export const getLatestPod = (
   conf: ModuleConf,
   namespace: string | undefined,
+  quiet: boolean | undefined
 ) => {
-  let cmd = `kubectl get pod --sort-by=.metadata.creationTimestamp -o name`;
+  let cmd = `kubectl get pod --sort-by=.metadata.creationTimestamp -o name --all-namespaces`;
   if (namespace) {
     cmd = `${cmd} --namespace ${namespace}`;
   }
   // Keep only the last pod and trim the prefix of "pod/"
   cmd = `${cmd} | tail -n 1 | cut -c 5-`;
-  console.log(chalk.bold('Getting latest pod...'));
-  execute(cmd, { showOutput: true, printCommand: true });
+  if (!quiet) {
+    console.log(chalk.bold('Getting latest pod...'));
+  }
+  execute(cmd, { showOutput: true, printCommand: !quiet, quiet });
 };
