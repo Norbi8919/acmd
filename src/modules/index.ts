@@ -5,11 +5,13 @@ import { Module } from '../types';
 import nebula from './nebula';
 import caddy from './caddy';
 import kube from './kube';
+import ffmpeg from './ffmpeg';
 
 const modules: { [key in string]: Module } = {
   nebula,
   caddy,
   kube,
+  ffmpeg,
 };
 
 const constructModule = (
