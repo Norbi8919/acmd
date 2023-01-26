@@ -1,6 +1,6 @@
 {
   "name": "acmd",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "A utility command-line tool for Ash",
   "main": "./lib/index.js",
   "bin": {
