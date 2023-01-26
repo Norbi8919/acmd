@@ -28,8 +28,7 @@ export const configure = (conf: ModuleConf) => {
 
 export const start = (conf: ModuleConf) => {
   if (!conf.get('nebulaPath') || !conf.get('configPath')) {
-    console.log(chalk.red('Please run `nebula configure` first.'));
-    return;
+    throw new Error(chalk.red('Please run `nebula configure` first.'));
   }
 
   const cmd = `sudo ${conf.get('nebulaPath')} --config ${conf.get(

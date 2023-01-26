@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import { execSync } from 'child_process';
-import { combineObjects, isEmptyObj } from './utils';
+import { combineObjects } from './utils';
 
 export interface ExecuteOptions {
   showOutput?: boolean;

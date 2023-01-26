@@ -10,7 +10,7 @@
     "start": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
     "create": "npm run build && npm run test",
     "build": "tsc -p .",
-    "local": "sudo npm i -g && acmd",
+    "install-local": "npm run build && sudo npm i -g",
     "refresh": "rm -rf ./node_modules ./package-lock.json && npm install",
     "deploy": "npm run build && npm publish"
   },

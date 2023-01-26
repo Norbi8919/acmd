@@ -34,8 +34,7 @@ export const configure = (conf: ModuleConf) => {
 
 export const start = (conf: ModuleConf) => {
   if (!conf.get('caddyPath') || !conf.get('caddyfilePath')) {
-    console.log(chalk.red('Please run `caddy configure` first.'));
-    return;
+    throw new Error(chalk.red('Please run `caddy configure` first.'));
   }
 
   const cmd = `sudo ${conf.get(
@@ -47,8 +46,7 @@ export const start = (conf: ModuleConf) => {
 
 export const stop = (conf: ModuleConf) => {
   if (!conf.get('caddyPath') || !conf.get('caddyfilePath')) {
-    console.log(chalk.red('Please run `caddy configure` first.'));
-    return;
+    throw new Error(chalk.red('Please run `caddy configure` first.'));
   }
 
   const cmd = `sudo ${conf.get('caddyPath')} stop`;

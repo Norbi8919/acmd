@@ -19,4 +19,9 @@ ${chalk.cyan(
 
 initModules(program);
 
-program.parse();
+try {
+  program.parse();
+} catch (e) {
+  console.log(chalk.red(e));
+  process.exit(1);
+}
