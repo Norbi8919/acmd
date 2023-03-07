@@ -30,3 +30,23 @@ export const trim = (
 
   execute(cmd, { showOutput: true, printCommand: true });
 };
+
+export const countFrames = (conf: ModuleConf, input: string) => {
+  // ffprobe -v error -select_streams v:0 -count_packets -show_entries stream=nb_read_packets -of csv=p=0
+  const cmdParts = [
+    'ffprobe',
+    '-v',
+    'error',
+    '-select_streams',
+    'v:0',
+    '-count_packets',
+    '-show_entries',
+    'stream=nb_read_packets',
+    '-of',
+    'csv=p=0',
+    input,
+  ];
+  const cmd = cmdParts.join(' ');
+
+  execute(cmd, { showOutput: true, printCommand: true });
+};

@@ -1,6 +1,6 @@
 import { Command } from 'commander';
 import { ModuleConf } from '../../conf';
-import { trim } from './utils';
+import { countFrames, trim } from './utils';
 
 export interface ITrimOptions {
   start?: string;
@@ -19,4 +19,9 @@ export default (command: Command, conf: ModuleConf) => {
     .action((inputPath: string, options: ITrimOptions) =>
       trim(conf, inputPath, options)
     );
+  command
+    .command('count-frames')
+    .description('Count the number of frames in a video file')
+    .argument('<input>', 'the path to the input video file')
+    .action((inputPath: string) => countFrames(conf, inputPath));
 };
