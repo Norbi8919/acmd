@@ -60,6 +60,7 @@ Commands:
 ```
 $ acmd ffmpeg
 Commands:
-  trim [options] <input>  Trim a video file
-  count-frames <input>    Count the number of frames in a video file
+  trim [options] <input>    Trim a video file
+  rotate [options] <input>  Rotate a video file (clockwise)
+  count-frames <input>      Count the number of frames in a video file
 ```
