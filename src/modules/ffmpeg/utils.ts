@@ -1,4 +1,4 @@
-import { IRotateOptions, ITrimOptions } from '.';
+import { IChangeFrameRateOptions, IRotateOptions, ITrimOptions } from '.';
 import { ModuleConf } from '../../conf';
 import { execute } from '../../proc';
 
@@ -63,6 +63,39 @@ export const rotate = (
     `"${input}"`,
     '-vf',
     transposeStr,
+    `"${output}"`,
+  ];
+  const cmd = cmdParts.join(' ');
+
+  execute(cmd, { showOutput: true, printCommand: true });
+};
+
+export const changeFrameRate = (
+  conf: ModuleConf,
+  input: string,
+  options: IChangeFrameRateOptions
+) => {
+  const { fps } = options;
+  let { output } = options;
+
+  if (!fps) {
+    throw new Error('You must specify a new frame rate');
+  }
+  if (fps <= 0) {
+    throw new Error('The new frame rate must be greater than zero');
+  }
+  if (!output) {
+    const inputParts = input.split('.');
+    const noExt = inputParts.slice(0, inputParts.length - 1).join('.');
+    output = `"${noExt}-${fps}fps.mp4"`;
+  }
+
+  const cmdParts = [
+    'ffmpeg',
+    '-i',
+    `"${input}"`,
+    '-vf',
+    `fps=${fps}`,
     `"${output}"`,
   ];
   const cmd = cmdParts.join(' ');

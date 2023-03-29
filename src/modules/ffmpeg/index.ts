@@ -1,6 +1,6 @@
 import { Command } from 'commander';
 import { ModuleConf } from '../../conf';
-import { countFrames, trim, rotate } from './utils';
+import { countFrames, trim, rotate, changeFrameRate } from './utils';
 
 export interface ITrimOptions {
   start?: string;
@@ -12,6 +12,11 @@ export interface IRotateOptions {
   '90'?: boolean;
   '180'?: boolean;
   '270'?: boolean;
+  output: string;
+}
+
+export interface IChangeFrameRateOptions {
+  fps: number;
   output: string;
 }
 
@@ -36,6 +41,15 @@ export default (command: Command, conf: ModuleConf) => {
     .option('-o, --output [path]', 'the path to the output video file')
     .action((inputPath: string, options: IRotateOptions) =>
       rotate(conf, inputPath, options)
+    );
+  command
+    .command('change-frame-rate')
+    .description('Change the frame rate of a video file')
+    .argument('<input>', 'the path to the input video file')
+    .option('-f, --fps [fps]', 'the new frame rate')
+    .option('-o, --output [path]', 'the path to the output video file')
+    .action((inputPath: string, options: IChangeFrameRateOptions) =>
+      changeFrameRate(conf, inputPath, options)
     );
   command
     .command('count-frames')
